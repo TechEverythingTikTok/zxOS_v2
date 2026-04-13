@@ -79,6 +79,5 @@ namespace Panic {
         VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Info, "You can safely reboot now...\n");
 
         __asm__ volatile("cli; hlt");
-        return;
     }
 }
