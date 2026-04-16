@@ -75,6 +75,8 @@ namespace Panic {
         VGA::Output("Kernel Code Selector: 0x08\n", VGA::Color::ProcessColor(VGA::Color::Colors::Gray, VGA::Color::Colors::Black));
         VGA::Output("Kernel Data Selector: 0x10\n", VGA::Color::ProcessColor(VGA::Color::Colors::Gray, VGA::Color::Colors::Black));
 
+        VGA::Output("e-mail: itsaxgammer@gmail.com\n", VGA::Color::ProcessColor(VGA::Color::Colors::White, VGA::Color::Colors::Black));
+
         VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Info, "You can safely reboot now...\n");
 
         __asm__ volatile("cli; hlt");

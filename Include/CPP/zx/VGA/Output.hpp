@@ -13,7 +13,7 @@ Header for Output.cpp
 namespace VGA {
     void Output(const char* src, u8 color);
 
-    extern bool vga_draw;
+    extern const bool vga_draw;
     extern bool in_panic;
 
     namespace Complex {

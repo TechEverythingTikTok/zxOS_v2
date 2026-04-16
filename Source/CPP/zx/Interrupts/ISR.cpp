@@ -11,7 +11,7 @@ Handles Interrupt Service Routine set up
 
 #include "zx/VGA/Output.hpp"
 
-#include "zx/Ports/IO.hpp"
+#include "zx/Drivers/Keyboard.hpp"
 
 struct Registers {
     u32 gs; 
@@ -35,7 +35,13 @@ struct Registers {
 
 extern "C" void ISRHandler(Registers* regs) {
     if (regs->int_no >= 32) {
+        u8 irq = regs->int_no - 32;
+        if (irq == 1) {
+            Keyboard::EventHandle();
+        }
         PIC::SendEOI(regs->int_no - 32);
+    } else {
+
     }
     return;
 }

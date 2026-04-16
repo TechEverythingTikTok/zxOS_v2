@@ -11,7 +11,7 @@ BUILD_ASM_SOURCE = Build/Assembly
 CPP_SOURCE = Source/CPP
 BUILD_CPP_SOURCE = Build/CPP
 
-all:
+create:
 # assembly
 	mkdir -p $(BUILD_ASM_SOURCE)
 	$(NASM) $(ASM_SOURCE)/multiboot2/multiboot2.asm -o $(BUILD_ASM_SOURCE)/multiboot2.o
@@ -57,3 +57,7 @@ all:
 
 # grub
 	$(GRUB) ISO
+
+clean:
+	rm -r Build
+	rm -f zxos.iso

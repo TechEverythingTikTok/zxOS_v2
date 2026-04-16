@@ -21,7 +21,7 @@
 
 namespace VGA {
 
-    bool vga_draw = true;
+    const bool vga_draw = true;
     bool in_panic = false;
 
     volatile char* Video = (volatile char*)(VGA::Address);

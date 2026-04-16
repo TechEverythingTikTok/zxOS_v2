@@ -78,13 +78,11 @@ extern "C" void __attribute__((stdcall)) KernelMain(
 
     VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Ok, "Remapped PIC\n");
     
-    for (size irq = 0; irq < 15; irq++) {
+    for (size irq = 0; irq < 16; irq++) {
         PIC::IRQ::SetMask(irq);
     }
 
     PIC::IRQ::ClearMask(2);
-
-    VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Warn, "Enabled interrupts\n");
 
     static char buf2[8];
     u32 target = Memory::BlockAmount * 4;
@@ -97,6 +95,8 @@ extern "C" void __attribute__((stdcall)) KernelMain(
     VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Ok, "Initialized keyboard\n");
 
     asm volatile("sti");
+
+    VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Warn, "Enabled interrupts\n");
 
     for (;;) {
         asm volatile("hlt");
