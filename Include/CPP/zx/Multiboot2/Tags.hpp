@@ -74,6 +74,7 @@ namespace Multiboot2 {
                 u8 framebuffer_green_field_pos;
                 u8 framebuffer_green_mask_size;
                 u8 framebuffer_blue_field_pos;
+                u8 framebuffer_blue_mask_size;
             };
         }
 

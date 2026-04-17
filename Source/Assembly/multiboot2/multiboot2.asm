@@ -25,6 +25,16 @@ header_start:
     ; [variable] data
     ;
     
+    ; framebuffer
+    dw 5
+    dw 0
+    dd 20
+    dd 1024 ; width
+    dd 768  ; height
+    dd 24    ; let GRUB decide
+
+    align 8
+    ; end
     dw 0
     dw 0
     dd 8

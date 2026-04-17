@@ -21,7 +21,7 @@
 
 namespace VGA {
 
-    const bool vga_draw = true;
+    const bool vga_draw = false;
     bool in_panic = false;
 
     volatile char* Video = (volatile char*)(VGA::Address);
@@ -34,7 +34,7 @@ namespace VGA {
             in_panic = true;
             Panic::Common(
                 "VGA Output is deprecated",
-                "VGA::___ is deprecated. Please replace it with Graphics::___"
+                "VGA::___ is deprecated. Please replace it with Console::___"
             );
         }
     }

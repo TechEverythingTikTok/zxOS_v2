@@ -22,7 +22,7 @@
                 "_UNICODE"
             ],
             "intelliSenseMode": "linux-gcc-x86",
-            "compilerPath": "\\\\wsl$\\Ubuntu\\usr\\bin\\gcc"
+            "compilerPath": "C:\\msys64\\ucrt64\\bin\\g++.exe"
         }
     ],
     "version": 4

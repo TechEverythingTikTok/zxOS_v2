@@ -16,6 +16,7 @@ Driver for keyboard (PS-2)
 #include "zx/Panic.hpp"
 
 namespace Keyboard {
+    bool first_press = false;
     // oh my days c++, no designated initializers
     u8 normal_lowercase[256] = {0};
     u8 normal_uppercase[256] = {0};
@@ -167,6 +168,7 @@ namespace Keyboard {
     }
 
     void EventHandle() {
+        first_press = true;
         u8 Scancode = IO::Input::Byte(0x60);
 
         Event event;

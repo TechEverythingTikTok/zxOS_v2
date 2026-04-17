@@ -1,7 +1,7 @@
 NASM = nasm -f elf32 -IInclude/Assembly
 GPP = g++ -m32 -c \
 	-ffreestanding -fno-rtti -fno-exceptions -fno-stack-protector -fno-pie \
-	-IInclude/CPP
+	-IInclude/CPP -Wall -Wextra
 LD = ld -m elf_i386 -nostdlib --nmagic -o ISO/boot/kernel.elf -T linker.ld
 GRUB = grub-mkrescue -o zxos.iso
 
@@ -39,20 +39,30 @@ create:
 
 	$(GPP) $(CPP_SOURCE)/zx/Drivers/Keyboard.cpp -o $(BUILD_CPP_SOURCE)/drivers_keyboard.o
 
+	$(GPP) $(CPP_SOURCE)/zx/Graphics/Basic.cpp -o $(BUILD_CPP_SOURCE)/graphics_basic.o
+	$(GPP) $(CPP_SOURCE)/zx/Graphics/Bitmap.cpp -o $(BUILD_CPP_SOURCE)/graphics_bitmap.o
+	$(GPP) $(CPP_SOURCE)/zx/Graphics/Bytemap.cpp -o $(BUILD_CPP_SOURCE)/graphics_bytemap.o
+	$(GPP) $(CPP_SOURCE)/zx/Graphics/Console.cpp -o $(BUILD_CPP_SOURCE)/graphics_console.o
+
+	$(GPP) $(CPP_SOURCE)/zx/Assets/Fonts/BitFont.cpp -o $(BUILD_CPP_SOURCE)/assets_fonts_bitfont.o
+
 	$(GPP) $(CPP_SOURCE)/zx/Panic.cpp -o $(BUILD_CPP_SOURCE)/panic.o
 	$(GPP) $(CPP_SOURCE)/zx/Debug.cpp -o $(BUILD_CPP_SOURCE)/debug.o
 
 # link
 	$(LD) $(BUILD_ASM_SOURCE)/multiboot2.o $(BUILD_ASM_SOURCE)/setup.o \
-		$(BUILD_CPP_SOURCE)/memory_utilities.o $(BUILD_CPP_SOURCE)/memory_string.o $(BUILD_CPP_SOURCE)/memory_heap.o \
-		$(BUILD_CPP_SOURCE)/drivers_keyboard.o \
-		$(BUILD_CPP_SOURCE)/vga_color.o $(BUILD_CPP_SOURCE)/vga_output.o \
 		$(BUILD_CPP_SOURCE)/panic.o $(BUILD_CPP_SOURCE)/debug.o \
-		$(BUILD_CPP_SOURCE)/permissions_gdt.o \
-		$(BUILD_ASM_SOURCE)/isr.o \
-		$(BUILD_CPP_SOURCE)/interrupts_idt.o $(BUILD_CPP_SOURCE)/interrupts_isr.o \
-		$(BUILD_CPP_SOURCE)/interrupts_pic.o \
+		$(BUILD_CPP_SOURCE)/memory_utilities.o $(BUILD_CPP_SOURCE)/memory_string.o $(BUILD_CPP_SOURCE)/memory_heap.o \
 		$(BUILD_CPP_SOURCE)/multiboot2_tags.o \
+		$(BUILD_ASM_SOURCE)/isr.o \
+		$(BUILD_CPP_SOURCE)/interrupts_isr.o $(BUILD_CPP_SOURCE)/interrupts_idt.o \
+		$(BUILD_CPP_SOURCE)/interrupts_pic.o \
+		$(BUILD_CPP_SOURCE)/drivers_keyboard.o \
+		$(BUILD_CPP_SOURCE)/assets_fonts_bitfont.o \
+		$(BUILD_CPP_SOURCE)/vga_color.o $(BUILD_CPP_SOURCE)/vga_output.o \
+		$(BUILD_CPP_SOURCE)/graphics_basic.o \
+		$(BUILD_CPP_SOURCE)/graphics_bytemap.o $(BUILD_CPP_SOURCE)/graphics_bitmap.o $(BUILD_CPP_SOURCE)/graphics_console.o \
+		$(BUILD_CPP_SOURCE)/permissions_gdt.o \
 		$(BUILD_CPP_SOURCE)/kernel.o
 
 # grub

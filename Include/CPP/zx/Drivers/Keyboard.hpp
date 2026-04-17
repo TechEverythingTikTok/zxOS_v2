@@ -10,6 +10,8 @@ Driver for keyboard (PS-2)
 #include "Integers.hpp"
 
 namespace Keyboard {
+    extern bool first_press;
+
     namespace SpecialKeyCode {
         constexpr char Escape = 'e';
         constexpr char Backspace = 'b';
