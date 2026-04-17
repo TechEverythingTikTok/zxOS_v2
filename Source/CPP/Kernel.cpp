@@ -126,6 +126,8 @@ extern "C" void __attribute__((stdcall)) KernelMain(
         asm volatile("hlt");
     }
 
+    Graphics::Basic::ClearScreen({0, 0, 0});
+
     for (;;) {
         asm volatile("hlt");
     }
