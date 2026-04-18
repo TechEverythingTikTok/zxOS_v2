@@ -45,7 +45,7 @@ namespace Keyboard {
 
     extern bool is_shift_pressed;
 
-    enum EventType {
+    enum class EventType {
         Normal,
         Keypad,
         Special

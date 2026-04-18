@@ -15,6 +15,8 @@ Driver for keyboard (PS-2)
 
 #include "zx/Panic.hpp"
 
+#include "zx/CLI/Master.hpp"
+
 namespace Keyboard {
     bool first_press = false;
     // oh my days c++, no designated initializers
@@ -194,11 +196,14 @@ namespace Keyboard {
                 event.type = EventType::Special;
                 c = special[Scancode];
                 if (c == SpecialKeyCode::LeftShift) {
-                    is_shift_pressed = true;
+                    is_shift_pressed = false;
                 }
 
             } else {
-                return;
+                Panic::Common(
+                    "Unknown scancode",
+                    "An unknown scancode has been sent by a PS/2 device."
+                );
             }
 
         } else {
@@ -220,16 +225,19 @@ namespace Keyboard {
                 event.type = EventType::Special;
                 c = special[Scancode];
                 if (c == SpecialKeyCode::LeftShift) {
-                    is_shift_pressed = false;
+                    is_shift_pressed = true;
                 }
 
             } else {
-                return;
+                Panic::Common(
+                    "Unknown scancode",
+                    "An unknown scancode has been sent by a PS/2 device."
+                );
             }
         }
 
         event.ident = c;
         
-        // I will do something with event right now
+        CLI::HandleInput(event);
     }
 }

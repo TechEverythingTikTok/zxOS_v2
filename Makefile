@@ -47,6 +47,8 @@ create:
 	$(GPP) $(CPP_SOURCE)/zx/Assets/Fonts/BitFont.cpp -o $(BUILD_CPP_SOURCE)/assets_fonts_bitfont.o
 	$(GPP) $(CPP_SOURCE)/zx/Assets/Cursors/ByteCursor.cpp -o $(BUILD_CPP_SOURCE)/assets_cursors_bytecursor.o
 
+	$(GPP) $(CPP_SOURCE)/zx/CLI/Master.cpp -o $(BUILD_CPP_SOURCE)/cli_master.o
+
 	$(GPP) $(CPP_SOURCE)/zx/Panic.cpp -o $(BUILD_CPP_SOURCE)/panic.o
 	$(GPP) $(CPP_SOURCE)/zx/Debug.cpp -o $(BUILD_CPP_SOURCE)/debug.o
 
@@ -60,6 +62,7 @@ create:
 		$(BUILD_CPP_SOURCE)/interrupts_isr.o $(BUILD_CPP_SOURCE)/interrupts_idt.o \
 		$(BUILD_CPP_SOURCE)/interrupts_pic.o \
 		$(BUILD_CPP_SOURCE)/drivers_keyboard.o \
+		$(BUILD_CPP_SOURCE)/cli_master.o \
 		$(BUILD_CPP_SOURCE)/vga_color.o $(BUILD_CPP_SOURCE)/vga_output.o \
 		$(BUILD_CPP_SOURCE)/graphics_basic.o \
 		$(BUILD_CPP_SOURCE)/graphics_bytemap.o $(BUILD_CPP_SOURCE)/graphics_bitmap.o $(BUILD_CPP_SOURCE)/graphics_console.o \

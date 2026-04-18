@@ -19,12 +19,14 @@ namespace Graphics {
     namespace Console {
         void PutCharacter(Point pos, Color col, char character);
 
-        constexpr u32 desired_distancing_x = 9;
+        constexpr u32 desired_distancing_x = 8;
         constexpr u32 desired_distancing_y = 10;
         extern u32 x;
         extern u32 y;
 
         void OutputString(Color col, const char* string);
+
+        void ClearScreen(Color color);
 
         namespace Status {
             enum class Type {

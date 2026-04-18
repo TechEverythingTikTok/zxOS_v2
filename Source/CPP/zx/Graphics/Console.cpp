@@ -11,6 +11,7 @@ Console for Framebuffer mode
 #include "zx/Graphics/Color.hpp"
 #include "zx/Graphics/Point.hpp"
 #include "zx/Graphics/Console.hpp"
+#include "zx/Graphics/Basic.hpp"
 
 #include "zx/Assets/Fonts/BitFont.hpp"
 
@@ -38,7 +39,7 @@ namespace Graphics {
                 }
                 PutCharacter({x, y}, col, *string);
                 x += desired_distancing_x;
-                if (x + 8 >= Multiboot2::Container::framebuffer->framebuffer_width - desired_distancing_x) {
+                if (x + desired_distancing_x >= Multiboot2::Container::framebuffer->framebuffer_width) {
                     x = desired_distancing_x;
                     y += desired_distancing_y;
 
@@ -48,6 +49,12 @@ namespace Graphics {
                 }
                 string++;
             }
+        }
+        
+        void ClearScreen(Color color) {
+            Graphics::Basic::ClearScreen(color);
+            x = desired_distancing_x;
+            y = desired_distancing_y;
         }
 
         namespace Status {

@@ -14,6 +14,8 @@ Handles kernel panic
 
 #include "zx/Debug.hpp"
 
+#include "zx/Graphics/Console.hpp"
+
 namespace Panic {
     void __attribute__((noreturn)) Common(
         const char* title,
@@ -88,7 +90,33 @@ namespace Panic {
 
             VGA::Complex::OutputStatusMessage(VGA::Complex::Status::Info, "You can safely reboot now...\n");
         } else {
+            Graphics::Console::ClearScreen({0, 0, 0});
 
+            Graphics::Console::OutputString({180, 0, 0}, "Kernel panic\n\n");
+            Graphics::Console::OutputString({255, 255, 255}, title);
+            Graphics::Console::OutputString({0, 0, 0}, "\n");
+            Graphics::Console::Status::Output(Graphics::Console::Status::Type::Failed, description);
+            Graphics::Console::OutputString({0, 0, 0}, "\n");
+            Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "This is a kernel panic designed to prevent any damage\nFurther information is below:\n");
+
+            static char buf[8];
+            String::Convert::IntegerToASCII(buf, eip);
+            Graphics::Console::OutputString({120, 120, 120}, "Instruction Pointer (base 10): ");
+            Graphics::Console::OutputString({0, 170, 170}, buf);
+            Graphics::Console::OutputString({120, 120, 120}, "B\n");
+
+            static char buf2[8];
+            String::Convert::IntegerToASCII(buf2, esp);
+            Graphics::Console::OutputString({120, 120, 120}, "Stack Pointer (base 10): ");
+            Graphics::Console::OutputString({0, 170, 170}, buf2);
+            Graphics::Console::OutputString({120, 120, 120}, "B\n");
+
+            Graphics::Console::OutputString({120, 120, 120}, "Kernel Code Selector: 0x08\n");
+            Graphics::Console::OutputString({120, 120, 120}, "Kernel Data Selector: 0x10\n");
+
+            Graphics::Console::OutputString({255, 255, 255}, "e-mail: itsaxgammer@gmail.com\n");
+
+            Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "You can safely reboot now...\n");
         }
 
         __asm__ volatile("cli; hlt");

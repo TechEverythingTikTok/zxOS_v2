@@ -34,6 +34,8 @@ Handles initialization, connects all other code together
 #include "zx/Assets/Fonts/BitFont.hpp"
 #include "zx/Assets/Cursors/ByteCursor.hpp"
 
+#include "zx/CLI/Master.hpp"
+
 extern "C" void __attribute__((stdcall)) KernelMain(
     uptr stack_size,
     uptr multiboot2_ident,
@@ -128,7 +130,8 @@ extern "C" void __attribute__((stdcall)) KernelMain(
         asm volatile("hlt");
     }
 
-    Graphics::Basic::ClearScreen({0, 0, 0});
+    Graphics::Console::ClearScreen({0, 0, 0});
+    CLI::Initialize();
 
     for (;;) {
         asm volatile("hlt");
