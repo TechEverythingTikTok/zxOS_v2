@@ -24,6 +24,10 @@ namespace Graphics {
         u32 x = desired_distancing_x;
         u32 y = desired_distancing_y;
 
+        void ScrollScreen() {
+            Graphics::Basic::ScrollScreen(desired_distancing_y);
+        }
+
         void OutputString(Color col, const char* string) {
             while (*string) {
                 if (*string == '\n') {
@@ -31,8 +35,8 @@ namespace Graphics {
                     y += desired_distancing_y;
 
                     if (y >= Multiboot2::Container::framebuffer->framebuffer_height) {
-                        // shit
-                        // ill implement this later yeahhh
+                        ScrollScreen();
+                        y -= desired_distancing_y;
                     }
                     string++;
                     continue;
@@ -44,7 +48,8 @@ namespace Graphics {
                     y += desired_distancing_y;
 
                     if (y >= Multiboot2::Container::framebuffer->framebuffer_height) {
-
+                        ScrollScreen();
+                        y -= desired_distancing_y;
                     }
                 }
                 string++;

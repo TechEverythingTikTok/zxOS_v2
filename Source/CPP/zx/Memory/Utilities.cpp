@@ -49,4 +49,17 @@ namespace Memory {
             csrc++;
         }
     }
+
+    void Set(
+        void* dest,
+        u32 value,
+        size n
+    ) {
+        char* cdest = (char*)dest;
+
+        while (n--) {
+            *cdest = value;
+            cdest++;
+        }
+    }
 }

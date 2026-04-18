@@ -21,4 +21,10 @@ namespace Memory {
         void* src,
         size n
     );
+
+    void Set(
+        void* dest,
+        u32 value,
+        size n
+    );
 }

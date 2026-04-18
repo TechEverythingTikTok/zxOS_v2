@@ -53,5 +53,22 @@ namespace Graphics {
                 }
             }
         }
+
+        void ScrollScreen(u32 height) {
+            u8* framebuffer_addr = (u8*)(uptr)Multiboot2::Container::framebuffer->framebuffer_addr;
+            u32 pitch = Multiboot2::Container::framebuffer->framebuffer_pitch;
+            u32 _height = Multiboot2::Container::framebuffer->framebuffer_height;
+
+            u32 bpp = Multiboot2::Container::framebuffer->framebuffer_bpp;
+            u32 bytes_per_pixel = bpp / 8;
+
+            u32 _min_pos = 0;  // x is 0 anyway so whatever
+            u32 _begin_pos = height * pitch;
+
+            u32 _amount_to_copy = pitch * (_height - height);
+
+            Memory::Move(framebuffer_addr + _min_pos, framebuffer_addr + _begin_pos, _amount_to_copy);
+            Memory::Set(framebuffer_addr + _amount_to_copy, 0, _begin_pos);
+        }
     }
 }

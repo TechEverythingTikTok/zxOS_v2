@@ -27,6 +27,25 @@ namespace CLI {
         }
     }
 
+    void ProcessCommand() {
+        if (buf[0] == '\0') return;
+        Graphics::Console::OutputString({0, 0, 0}, "\n");
+        if (String::Equals(buf, "help")) {
+            Graphics::Console::OutputString(
+                {255, 255, 255}, 
+                "zxOS v2 (32-bit)\n"
+                "help - display Help\n"
+                "clear - clear screen"
+            );
+        } else if (String::Equals(buf, "clear")) {
+            Graphics::Console::ClearScreen({0, 0, 0});
+            return;
+        } else {
+            Graphics::Console::OutputString({170, 0, 0}, "Unknown command. Type 'help' for assistance.");
+        }
+        Graphics::Console::OutputString({0, 0, 0}, "\n");
+    }
+
     void HandleInput(Keyboard::Event event) {
         if (event.release == true) return;
         if (event.type == Keyboard::EventType::Normal) {
@@ -53,8 +72,7 @@ namespace CLI {
                 buf[access] = 0;
                 access--;
             } else if (event.ident == Keyboard::SpecialKeyCode::Enter) {
-                // process command
-                Graphics::Console::OutputString({0, 0, 0}, "\n");
+                ProcessCommand();
                 Initialize();
             }
         }

@@ -19,5 +19,6 @@ namespace Graphics {
         void DrawPixel(Point pos, Color color);
         void DrawRect(Point pos, Point _size, Color color);
         void ClearScreen(Color color);
+        void ScrollScreen(u32 height);
     }
 }
