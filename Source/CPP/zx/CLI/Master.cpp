@@ -48,6 +48,7 @@ namespace CLI {
                 "echo - output string\n"
                 "sysfetch - get system information\n"
                 "reboot - reboot system\n"
+                "beep - beep"
             );
         } else if (String::Equals(firstword, "clear")) {
             Graphics::Console::ClearScreen({0, 0, 0});
