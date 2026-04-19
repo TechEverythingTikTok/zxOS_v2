@@ -10,5 +10,9 @@ Header for IDT.cpp
 #include "Integers.hpp"
 
 namespace IDT {
+    struct __attribute__((packed)) IDTR {
+        u16 limit;
+        u32 base;
+    };
     void DefaultInitialize();
 }

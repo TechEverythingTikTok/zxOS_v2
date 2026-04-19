@@ -7,8 +7,7 @@ Handles Interrupt Descriptor Table set up
 
 #include "Integers.hpp"
 
-#include "zx/VGA/Color.hpp"
-#include "zx/VGA/Output.hpp"
+#include "zx/Interrupts/IDT.hpp"
 
 namespace IDT {
     extern "C" u32 isr_table[];
@@ -19,11 +18,6 @@ namespace IDT {
         u8 zero;
         u8 type_attributes;
         u16 offset_2;
-    };
-
-    struct __attribute__((packed)) IDTR {
-        u16 limit;
-        u32 base;
     };
 
     Entry entries[256];

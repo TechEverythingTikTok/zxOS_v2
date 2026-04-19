@@ -15,6 +15,8 @@ Handles Interrupt Service Routine set up
 
 #include "zx/Ports/IO.hpp"
 
+#include "zx/Panic.hpp"
+
 struct Registers {
     u32 gs; 
     u32 fs; 
@@ -43,7 +45,7 @@ extern "C" void ISRHandler(Registers* regs) {
         }
         PIC::SendEOI(regs->int_no - 32);
     } else {
-
+        Panic::Interrupt(regs->int_no, regs->err_code);
     }
     return;
 }

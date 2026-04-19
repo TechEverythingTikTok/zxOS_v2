@@ -18,6 +18,10 @@ namespace String {
         const char* src1, const char* src2
     );
 
+    void GetFirstWord(
+        char* dest, const char* src
+    );
+
     void Reverse(char* dest, const char* src, size len);
 
     namespace Check {

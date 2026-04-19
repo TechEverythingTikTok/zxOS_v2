@@ -13,8 +13,13 @@ Header for Panic.cpp
 #include "zx/VGA/Output.hpp"
 
 namespace Panic {
-    void Common(
+    void __attribute__((noreturn)) Common(
         const char* title,
         const char* description
+    );
+
+    void __attribute__((noreturn)) Interrupt(
+        u32 int_no,
+        u32 err_code
     );
 }

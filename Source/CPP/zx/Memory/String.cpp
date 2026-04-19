@@ -32,6 +32,18 @@ namespace String {
         return *src1 == *src2;
     }
 
+    void GetFirstWord(
+        char* dest, const char* src
+    ) {
+        while (*src && *src != ' ') {
+            *dest = *src;
+            dest++;
+            src++;
+        }
+
+        *dest = '\0';
+    }
+
     void Reverse(char* dest, const char* src, size len) {
         if (len == 0) {
             dest[0] = '\0';

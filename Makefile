@@ -49,6 +49,8 @@ create:
 
 	$(GPP) $(CPP_SOURCE)/zx/CLI/Master.cpp -o $(BUILD_CPP_SOURCE)/cli_master.o
 
+	$(GPP) $(CPP_SOURCE)/zx/Identification/CPU.cpp -o $(BUILD_CPP_SOURCE)/identification_cpu.o
+
 	$(GPP) $(CPP_SOURCE)/zx/Panic.cpp -o $(BUILD_CPP_SOURCE)/panic.o
 	$(GPP) $(CPP_SOURCE)/zx/Debug.cpp -o $(BUILD_CPP_SOURCE)/debug.o
 
@@ -57,6 +59,7 @@ create:
 		$(BUILD_CPP_SOURCE)/panic.o $(BUILD_CPP_SOURCE)/debug.o \
 		$(BUILD_CPP_SOURCE)/memory_utilities.o $(BUILD_CPP_SOURCE)/memory_string.o $(BUILD_CPP_SOURCE)/memory_heap.o \
 		$(BUILD_CPP_SOURCE)/assets_fonts_bitfont.o $(BUILD_CPP_SOURCE)/assets_cursors_bytecursor.o \
+		$(BUILD_CPP_SOURCE)/identification_cpu.o \
 		$(BUILD_CPP_SOURCE)/multiboot2_tags.o \
 		$(BUILD_ASM_SOURCE)/isr.o \
 		$(BUILD_CPP_SOURCE)/interrupts_isr.o $(BUILD_CPP_SOURCE)/interrupts_idt.o \

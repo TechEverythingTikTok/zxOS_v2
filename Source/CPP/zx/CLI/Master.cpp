@@ -15,6 +15,12 @@ Core CLI Input
 
 #include "zx/Multiboot2/Tags.hpp"
 
+#include "zx/Identification/CPU.hpp"
+
+#include "zx/Interrupts/IDT.hpp"
+
+#include "zx/Ports/IO.hpp"
+
 namespace CLI {
     static char buf[512] = {0};
     size access = 0;
@@ -29,17 +35,50 @@ namespace CLI {
 
     void ProcessCommand() {
         if (buf[0] == '\0') return;
+        static char firstword[512] = {0};
         Graphics::Console::OutputString({0, 0, 0}, "\n");
-        if (String::Equals(buf, "help")) {
+        String::GetFirstWord(firstword, buf);
+
+        if (String::Equals(firstword, "help")) {
             Graphics::Console::OutputString(
                 {255, 255, 255}, 
                 "zxOS v2 (32-bit)\n"
-                "help - display Help\n"
-                "clear - clear screen"
+                "help - display help\n"
+                "clear - clear screen\n"
+                "echo - output string\n"
+                "sysfetch - get system information\n"
+                "reboot - reboot system\n"
             );
-        } else if (String::Equals(buf, "clear")) {
+        } else if (String::Equals(firstword, "clear")) {
             Graphics::Console::ClearScreen({0, 0, 0});
             return;
+        } else if (String::Equals(firstword, "echo")) {
+            static char msg[512] = {0};
+            String::Copy(msg, buf + 5);
+            Graphics::Console::OutputString({255, 255, 255}, msg);
+        } else if (String::Equals(firstword, "sysfetch")) {
+            Graphics::Console::OutputString(
+                {255, 255, 255},
+                "__________\n"
+                "         /      \\       /\n"
+                "        /        \\     /\n"
+                "       /          \\   /\n"
+                "      /            \\ /\n"
+                "     /              /\n"
+                "    /              / \\\n"
+                "   /              /   \\\n"
+                "  /              /     \\\n"
+                " /              /       \\\n"
+                "__________     /         \\\n"
+            );
+            Graphics::Console::OutputString({255, 255, 255}, "zxOS v2 (32 bit)\n");
+            Graphics::Console::OutputString({255, 255, 255}, "CPU: ");
+            Memory::MemoryBlock block = Identification::CPU::GetBrandString();
+            Graphics::Console::OutputString({255, 255, 255}, (char*)block.ptr);
+        } else if (String::Equals(firstword, "reboot")) {
+            IDT::IDTR zero = {0, 0};
+            asm volatile("lidt %0" : : "m"(zero));
+            asm volatile("int $3");
         } else {
             Graphics::Console::OutputString({170, 0, 0}, "Unknown command. Type 'help' for assistance.");
         }
@@ -49,6 +88,14 @@ namespace CLI {
     void HandleInput(Keyboard::Event event) {
         if (event.release == true) return;
         if (event.type == Keyboard::EventType::Normal) {
+            if (access >= 511) {
+                IO::Methods::Beep(1000);
+                for (size i = 0; i < 10000000; i++) {
+                    IO::Methods::Hiccup();
+                }
+                IO::Methods::NoBeep();
+                return;
+            }
             buf[access] = event.ident;
             static char acc[2];
             acc[0] = event.ident;
@@ -61,7 +108,7 @@ namespace CLI {
                 if (Graphics::Console::x < Graphics::Console::desired_distancing_x + 8) {
                     Graphics::Console::y -= Graphics::Console::desired_distancing_y;
                     Graphics::Console::x = Multiboot2::Container::framebuffer->framebuffer_width - Graphics::Console::desired_distancing_x - 8;
-
+                    
                     Graphics::Console::PutCharacter({Graphics::Console::x, Graphics::Console::y}, {0, 0, 0}, 31);
                     
                 } else {
