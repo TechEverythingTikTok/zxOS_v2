@@ -28,11 +28,31 @@ namespace Graphics {
             u32 _pos = pos.y * pitch + pos.x * bytes_per_pixel;
 
             switch (bytes_per_pixel) {
-                case 3:
+                case 4: {
                     framebuffer_addr[_pos] = color.b;
                     framebuffer_addr[_pos + 1] = color.g;
                     framebuffer_addr[_pos + 2] = color.r;
                     break;
+                }
+
+                case 3: {
+                    const Multiboot2::Tags::Framebuffer::Tag* fb = Multiboot2::Container::framebuffer;
+
+                    u32 pixel = 0;
+
+                    pixel |= (color.r >> (8 - fb->framebuffer_red_mask_size))
+                        << fb->framebuffer_red_field_pos;
+
+                    pixel |= (color.g >> (8 - fb->framebuffer_green_mask_size))
+                        << fb->framebuffer_green_field_pos;
+
+                    pixel |= (color.b >> (8 - fb->framebuffer_blue_mask_size))
+                        << fb->framebuffer_blue_field_pos;
+
+                    *(u32*)(framebuffer_addr + _pos) = pixel;
+                    break;
+                }
+
                 default:
                     break;
             }

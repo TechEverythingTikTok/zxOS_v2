@@ -31,7 +31,7 @@ header_start:
     dd 20
     dd 1024 ; width
     dd 768  ; height
-    dd 24    ; let GRUB decide
+    dd 0    ; anything
 
     align 8
     ; end
