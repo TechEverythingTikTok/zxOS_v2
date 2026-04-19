@@ -79,6 +79,13 @@ namespace CLI {
             IDT::IDTR zero = {0, 0};
             asm volatile("lidt %0" : : "m"(zero));
             asm volatile("int $3");
+        } else if (String::Equals(firstword, "beep")) {
+            IO::Methods::Beep(1000);
+            for (size i = 0; i < 10000000; i++) {
+                IO::Methods::Hiccup();
+            }
+            IO::Methods::NoBeep();
+            return;
         } else {
             Graphics::Console::OutputString({170, 0, 0}, "Unknown command. Type 'help' for assistance.");
         }
