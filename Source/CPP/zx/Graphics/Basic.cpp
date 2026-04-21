@@ -19,7 +19,7 @@ namespace Graphics {
     namespace Basic {
         void DrawPixel(Point pos, Color color) {
             // oh no
-            u8* framebuffer_addr = (u8*)(uptr)Multiboot2::Container::framebuffer->framebuffer_addr;
+            u8* framebuffer_addr = (u8*)Multiboot2::Container::framebuffer->framebuffer_addr;
             u32 pitch = Multiboot2::Container::framebuffer->framebuffer_pitch;
 
             u32 bpp = Multiboot2::Container::framebuffer->framebuffer_bpp;
@@ -75,7 +75,7 @@ namespace Graphics {
         }
 
         void ScrollScreen(u32 height) {
-            u8* framebuffer_addr = (u8*)(uptr)Multiboot2::Container::framebuffer->framebuffer_addr;
+            u8* framebuffer_addr = (u8*)Multiboot2::Container::framebuffer->framebuffer_addr;
             u32 pitch = Multiboot2::Container::framebuffer->framebuffer_pitch;
             u32 _height = Multiboot2::Container::framebuffer->framebuffer_height;
 

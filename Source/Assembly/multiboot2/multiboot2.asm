@@ -29,9 +29,9 @@ header_start:
     dw 5
     dw 0
     dd 20
-    dd 1024 ; width
-    dd 768  ; height
-    dd 0    ; anything
+    dd 1920 ; width
+    dd 1080  ; height
+    dd 32    ; 32 bpp
 
     align 8
     ; end

@@ -1,4 +1,5 @@
 NASM = nasm -f elf32 -IInclude/Assembly
+LNASM = nasm -f elf64 -IInclude/Assembly
 GPP = g++ -m32 -c \
 	-ffreestanding -fno-rtti -fno-exceptions -fno-stack-protector -fno-pie \
 	-IInclude/CPP -Wall -Wextra

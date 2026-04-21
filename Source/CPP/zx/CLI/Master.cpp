@@ -45,15 +45,19 @@ namespace CLI {
                 "zxOS v2 (32-bit)\n"
                 "help - display help\n"
                 "clear - clear screen\n"
-                "echo - output string\n"
+                "echo <message> - output string\n"
                 "sysfetch - get system information\n"
                 "reboot - reboot system\n"
-                "beep - beep"
+                "beep <frequency> - output a beep with a select frequency"
             );
         } else if (String::Equals(firstword, "clear")) {
             Graphics::Console::ClearScreen({0, 0, 0});
             return;
         } else if (String::Equals(firstword, "echo")) {
+            if (access < 5) {
+                Graphics::Console::OutputString({255, 255, 255}, "Usage: echo <message>");
+                return;
+            }
             static char msg[512] = {0};
             String::Copy(msg, buf + 5);
             Graphics::Console::OutputString({255, 255, 255}, msg);
@@ -81,7 +85,13 @@ namespace CLI {
             asm volatile("lidt %0" : : "m"(zero));
             asm volatile("int $3");
         } else if (String::Equals(firstword, "beep")) {
-            IO::Methods::Beep(1000);
+            if (access < 5) {
+                Graphics::Console::OutputString({255, 255, 255}, "Usage: beep <frequency>");
+            }
+            static char freq[24] = {0};
+            String::Copy(freq, buf + 5);
+            i32 freq_num = String::Convert::ASCIIToInteger(freq);
+            IO::Methods::Beep(freq_num);
             for (size i = 0; i < 10000000; i++) {
                 IO::Methods::Hiccup();
             }

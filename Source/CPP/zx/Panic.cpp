@@ -119,6 +119,14 @@ namespace Panic {
             Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "You can safely reboot now...\n");
         }
 
+        IO::Methods::Beep(1000);
+
+        for (size i = 0; i < 10000000; i++) {
+            IO::Methods::Hiccup();
+        }
+
+        IO::Methods::NoBeep();
+
         __asm__ volatile("cli; hlt");
         __builtin_unreachable();
     }
@@ -366,6 +374,14 @@ namespace Panic {
 
             Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "You can safely reboot now...\n");
         }
+
+        IO::Methods::Beep(1000);
+
+        for (size i = 0; i < 10000000; i++) {
+            IO::Methods::Hiccup();
+        }
+
+        IO::Methods::NoBeep();
 
         __asm__ volatile("cli; hlt");
         __builtin_unreachable();

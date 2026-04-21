@@ -78,6 +78,12 @@ extern "C" void __attribute__((stdcall)) KernelMain(
         Multiboot2::Tags::Parse(tag);
     }  
 
+    static char _bpp[12];
+    String::Convert::IntegerToASCII(_bpp, Multiboot2::Container::framebuffer->framebuffer_bpp);
+    Debug::Output("BPP: ");
+    Debug::Output(_bpp);
+    Debug::Output("\n");
+
     Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "Initializing system\n");
 
     Graphics::Console::Status::Output(Graphics::Console::Status::Type::Info, "Stack size: ");
