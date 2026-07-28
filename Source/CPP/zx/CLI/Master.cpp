@@ -35,6 +35,11 @@ namespace CLI {
 
     void ProcessCommand() {
         if (buf[0] == '\0') return;
+        
+        if (String::Equals(buf, "sudo apt install opsec")) {
+            Panic::Common("LARP LARP SAHUR", "you are a larp");
+        }
+        
         static char firstword[512] = {0};
         Graphics::Console::OutputString({0, 0, 0}, "\n");
         String::GetFirstWord(firstword, buf);
